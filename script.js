@@ -112,7 +112,7 @@ let fetchVideosInfo = async (videosIds, apiKey) => {
 }
 
 let getChannelIdByURL = async (url) => {
-    return fetch('https://cors-anywhere.herokuapp.com/https://www.youtube.com/c/kuplinovplay')
+    return fetch('https://cors-anywhere.herokuapp.com/' + url)
     .then(response => response.text())
     .then((html) => {
         var parser = new DOMParser();
