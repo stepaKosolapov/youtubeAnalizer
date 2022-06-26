@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <script defer src="script.js"></script>
+</head>
+
+<body>
+    <div id="mainContainer">
+        <div id="inputs">
+            <div class="inputContainer">
+                <div class="label">
+                    API key<br />(<a target="_blank"
+                        href="https://developers.google.com/youtube/v3/getting-started">YoutubeDataAPIv3</a>)
+                </div>
+                <input id="apiKey" type="text">
+                <div class="error" id="apiKeyError">error</div>
+            </div>
+            <div class="inputContainer">
+                <div class="label">
+                    Youtube channel URL
+                </div>
+                <input id="channelURL" type="text">
+                <div class="error" id="channelURLError">error</div>
+            </div>
+            <div class="dateInputContainer">
+                <div class="inputContainer">
+                    <div class="label">
+                        Posted after
+                    </div>
+                    <input id="fromDate" type="date">
+                    <div class="error" id="fromDateError">error</div>
+                </div>
+                <div class="inputContainer">
+                    <div class="label">
+                        Posted before
+                    </div>
+                    <input id="toDate" type="date">
+                    <div class="error" id="toDateError">error</div>
+                </div>
+            </div>
+            <button id="analyzeButton">analyze</button>
+        </div>
+
+        <div id="results">
+            <h1>RESULTS</h1>
+            <div class="table">
+                <div class="row header">
+                    <div class="cell">
+                        Metric
+                    </div>
+                    <div class="cell">
+                        Total
+                    </div>
+                    <div class="cell">
+                        Average
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="cell">
+                        Views
+                    </div>
+                    <div class="cell" id="totalViews">
+                    </div>
+                    <div class="cell" id="averageViews">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="cell">
+                        Comments
+                    </div>
+                    <div class="cell" id="totalComments">
+                    </div>
+                    <div class="cell" id="averageComments">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="cell" data-title="Name">
+                        Likes
+                    </div>
+                    <div class="cell" id="totalLikes">
+                    </div>
+                    <div class="cell" id="averageLikes">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="cell" data-title="Name">
+                        Videos
+                    </div>
+                    <div class="cell" id="totalVideos">
+                    </div>
+                    <div class="cell" id="averageVideos">
+                    </div>
+                </div>
+            </div>
+        </div>
+</body>
+
+</html>
