@@ -1,15 +1,8 @@
 API_PATH = "https://youtube.googleapis.com/youtube/v3";
 
 let getChannelIdByURL = async (url) => {
-    return fetch('https://cors-anywhere.herokuapp.com/' + url)
-    .then(response => response.text())
-    .then((html) => {
-        var parser = new DOMParser();
-        var doc = parser.parseFromString(html, "text/html");
-        for (let meta of doc.getElementsByTagName('meta')) {
-            if (meta.getAttribute('itemprop') === 'channelId') return meta.getAttribute('content');
-        }
-    })
+    return fetch('https://stepakosolapov.pythonanywhere.com/' + url)
+    .then(response => response.text());
 }
 
 let fetchVideosIds = async (channelId, fromDate, toDate, apiKey) => {
