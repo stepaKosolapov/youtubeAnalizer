@@ -1,0 +1,246 @@
+* {
+    box-sizing: border-box;
+    font-family: 'Montserrat';
+}
+
+
+body {
+    display: flex;
+    align-items: center;
+    padding: 1vh 30vh;
+
+    background-color: rgb(77, 77, 77);
+}
+
+.mainContainer {
+    height: 90vh;
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+
+
+    background-color: rgb(148, 148, 148);
+}
+
+.pageContainer {
+    height: 100%;
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+
+    overflow: hidden;
+
+
+    background-color: rgb(148, 148, 148);
+}
+
+.table {
+    width: 100%;
+    height: 100%;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    display: table;
+}
+
+.row {
+    display: table-row;
+    background: rgb(109, 109, 109);
+    color: white;
+}
+
+.row:nth-of-type(odd) {
+    background-color: rgb(148, 148, 148);
+}
+
+.row > .cell:nth-child(1) {
+    pointer-events: none;
+    font-weight: 600;
+    text-align: left;
+}
+
+.row.header .cell {
+    pointer-events: none;
+    font-weight: 900;
+}
+
+.cell {
+    cursor: pointer;
+
+    width: 33%;
+
+    padding: 6px 12px;
+    display: table-cell;
+    font-size: 1.25em;
+
+    text-align: right;
+}
+
+.cell:hover {
+    background-color: rgba(0, 88, 19, 0.315);
+}
+
+.inputContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+
+    height: 7em;
+    width: 100%;
+}
+
+input {
+    height: 2em;
+    width: 100%;
+
+    padding: 0.3em;
+
+    border: none;
+    border-radius: 14px;
+    background-color: rgb(255, 255, 255);
+
+
+    font-size: 1.3em;
+    font-weight: bold;
+    color: rgb(109, 109, 109);
+    text-align: center;
+
+
+    transition: transform cubic-bezier(.1, -1.5, .1, 2.5) 0.8s,
+        box-shadow cubic-bezier(.1, -1.5, .1, 2.5) 0.8s;
+}
+
+input::placeholder {
+    color: rgba(109, 109, 109, 0.411);
+}
+
+input:focus {
+    outline: none;
+    box-shadow: 0 3px 14pt -4pt rgb(148, 148, 148);
+
+    transform: translateY(-2px);
+}
+
+.label {
+    color: rgb(255, 255, 255);
+
+    text-align: center;
+}
+
+.label > a {
+    color: rgb(255, 255, 255);
+    font-weight: bold;
+    font-size: 0.8em;
+}
+
+.topSettings {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+
+    position: relative;
+
+    width: 100%;
+
+    padding: 2% 20% 4%;
+}
+
+.dateInputContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    width: 100%;
+}
+
+.dateInputContainer .inputContainer {
+    height: 70px;
+    width: auto;
+}
+
+.dateInputContainer input {
+    height: 30px;
+
+    border-radius: 10px;
+
+    font-size: 1rem;
+}
+
+.dateInputContainer input:focus {
+    transform: translateY(-2px);
+}
+
+.pageSwitcherContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    position: absolute;
+
+    top: 90%;
+    left: 25%;
+
+    width: 50%;
+
+}
+
+.switchButton {
+    cursor: pointer;
+
+    width: 50%;
+    height: 3.2em;
+
+    border: none;
+    border-radius: 14px;
+    background-color: rgb(255, 255, 255);
+
+
+    font-size: 1em;
+    font-weight: 900;
+
+    color: rgb(109, 109, 109);
+    text-align: center;
+
+
+    transition: transform ease 0.8s,
+        box-shadow ease 0.8s,
+        background-color ease 0.4s,
+        color ease 0.4s;
+}
+
+.switchButton[data-page-index="0"] {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.switchButton[data-page-index="0"]:hover {
+    transform: translateX(-10px);   
+}
+
+.switchButton[data-page-index="1"] {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.switchButton[data-page-index="1"]:hover {
+    transform: translateX(10px);
+}
+
+.switchButton:hover,
+.switchButton:focus {
+    outline: none;
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+.switchButton:disabled {
+    pointer-events: none;
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 1px solid white;
+}

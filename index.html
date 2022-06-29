@@ -6,13 +6,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="style.css">
-    <script defer src="script.js"></script>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/mainPage.css">
+    <link rel="stylesheet" href="css/excelPage.css">
+    <script defer src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+    <script defer src="js/utils.js"></script>
+    <script defer src="js/api.js"></script>
+    <script defer src="js/excel.js"></script>
+    <script defer src="js/switchPages.js"></script>
+    <script defer src="js/main.js"></script>
 </head>
 
 <body>
-    <div id="mainContainer">
-        <div id="inputs">
+    <div class="mainContainer">
+        <div class="topSettings">
             <div class="inputContainer">
                 <div class="label">
                     API key<br />(<a target="_blank"
@@ -20,13 +27,6 @@
                 </div>
                 <input id="apiKey" type="text">
                 <div class="error" id="apiKeyError">error</div>
-            </div>
-            <div class="inputContainer">
-                <div class="label">
-                    Youtube channel URL
-                </div>
-                <input id="channelURL" type="text">
-                <div class="error" id="channelURLError">error</div>
             </div>
             <div class="dateInputContainer">
                 <div class="inputContainer">
@@ -44,65 +44,175 @@
                     <div class="error" id="toDateError">error</div>
                 </div>
             </div>
-            <button id="analyzeButton">analyze</button>
+            <div class="pageSwitcherContainer">
+                <button class="switchButton" data-page-index="0">Single request</button>
+                <button class="switchButton" data-page-index="1">Multiple request</button>
+            </div>
         </div>
-
-        <div id="results">
-            <h1>RESULTS</h1>
-            <div class="table">
-                <div class="row header">
-                    <div class="cell">
-                        Metric
+        <div class="pageContainer" data-page-index="0" style="display: none;">
+            <div class="inputsWrapper">
+                <div class="inputContainer">
+                    <div class="label">
+                        Youtube channel URL
                     </div>
-                    <div class="cell">
-                        Total
-                    </div>
-                    <div class="cell">
-                        Average
-                    </div>
+                    <input id="channelURL" type="text">
+                    <div class="error" id="channelURLError">error</div>
                 </div>
 
-                <div class="row">
-                    <div class="cell">
-                        Views
+                <button id="analyzeButton">analyze</button>
+            </div>
+            <div class="tableWrapper">
+                <div class="table">
+                    <div class="row header">
+                        <div class="cell">
+                            Metric
+                        </div>
+                        <div class="cell">
+                            Total
+                        </div>
+                        <div class="cell">
+                            Average
+                        </div>
                     </div>
-                    <div class="cell" id="totalViews">
-                    </div>
-                    <div class="cell" id="averageViews">
-                    </div>
-                </div>
 
-                <div class="row">
-                    <div class="cell">
-                        Comments
+                    <div class="row">
+                        <div class="cell">
+                            Views
+                        </div>
+                        <div class="cell" id="totalViews">
+                        </div>
+                        <div class="cell" id="averageViews">
+                        </div>
                     </div>
-                    <div class="cell" id="totalComments">
-                    </div>
-                    <div class="cell" id="averageComments">
-                    </div>
-                </div>
 
-                <div class="row">
-                    <div class="cell" data-title="Name">
-                        Likes
+                    <div class="row">
+                        <div class="cell">
+                            Comments
+                        </div>
+                        <div class="cell" id="totalComments">
+                        </div>
+                        <div class="cell" id="averageComments">
+                        </div>
                     </div>
-                    <div class="cell" id="totalLikes">
-                    </div>
-                    <div class="cell" id="averageLikes">
-                    </div>
-                </div>
 
-                <div class="row">
-                    <div class="cell" data-title="Name">
-                        Videos
+                    <div class="row">
+                        <div class="cell" data-title="Name">
+                            Likes
+                        </div>
+                        <div class="cell" id="totalLikes">
+                        </div>
+                        <div class="cell" id="averageLikes">
+                        </div>
                     </div>
-                    <div class="cell" id="totalVideos">
-                    </div>
-                    <div class="cell" id="averageVideos">
+
+                    <div class="row">
+                        <div class="cell" data-title="Name">
+                            Videos
+                        </div>
+                        <div class="cell" id="totalVideos">
+                        </div>
+                        <div class="cell" id="averageVideos">
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+
+        <div class="pageContainer" data-page-index="1">
+            <div class="excelSettingsContainer">
+                <div class="excelHorizontalContainer">
+                    <div class="inputContainer">
+                        <div class="label">
+                            Table for processing
+                        </div>
+                        <div class="fileUploaderContainer">
+                            <input name="file" type="file" id="fileUpload" class="fileUploader">
+                            <label for="fileUpload" class="fileUploadButton">
+                                <span class="fileUploadIconWrapper"><img src="./img/excelIcon.svg" alt="Файл"
+                                        width="25"></span>
+                                <span class="fileUploadText">Select a file</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="inputContainer">
+                        <div class="label">
+                            Url column origin
+                        </div>
+                        <input type="text" id="urlColumn" placeholder="A2?">
+                    </div>
+                    <div class="inputContainer">
+                        <div class="label">
+                            Channel Id column origin
+                        </div>
+                        <input type="text" id="channelIdColumn" placeholder="B2?">
+                    </div>
+                </div>
+                <div class="tableWrapper">
+                    <h3>Enter all the necessary column origins</h3>
+                    <div class="table">
+                        <div class="row header">
+                            <div class="cell">
+                                Metric
+                            </div>
+                            <div class="cell">
+                                Total
+                            </div>
+                            <div class="cell">
+                                Average
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="cell">
+                                Views
+                            </div>
+                            <div class="cell" id="totalViewsColumn" contenteditable>
+                            </div>
+                            <div class="cell" id="averageViewsColumn" contenteditable>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="cell">
+                                Comments
+                            </div>
+                            <div class="cell" id="totalCommentsColumn" contenteditable>
+                            </div>
+                            <div class="cell" id="averageCommentsColumn" contenteditable>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="cell" data-title="Name">
+                                Likes
+                            </div>
+                            <div class="cell" id="totalLikesColumn" contenteditable>
+                            </div>
+                            <div class="cell" id="averageLikesColumn" contenteditable>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="cell" data-title="Name">
+                                Videos
+                            </div>
+                            <div class="cell" id="totalVideosColumn" contenteditable>
+                            </div>
+                            <div class="cell" id="averageVideosColumn" contenteditable>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="fileDownloadContainer">
+                    <button id="fileDownload">process</button>
+                    <div class="progressCounterWrapper">
+                        <span id="progressCounter">0 / 0</span>
+                        <div class="progressBar"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>
