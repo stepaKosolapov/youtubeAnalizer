@@ -36,6 +36,7 @@ let displayResults = (result) => {
 let parseInputs = () => {
     return {
         channelURL: document.getElementById('channelURL').value,
+        channelId: document.getElementById('channelId').value,
         fromDate: new Date(document.getElementById('fromDate').value),
         toDate: new Date(document.getElementById('toDate').value),
         apiKey: document.getElementById('apiKey').value,
@@ -65,17 +66,20 @@ let analyzeVideosInfo = (videosInfo, days) => {
     }
 }
 
-let validateInputs = ({channelURL, fromDate, toDate, apiKey}) => {
+let validateInputs = ({channelURL, channelId, fromDate, toDate, apiKey}) => {
     let isValid = true;
     if (apiKey) setError("apiKey");
     else {
         isValid = false;
         setError("apiKey", "This field is required");
     }
-    if (channelURL) setError("channelURL");
-    else {
+    if (channelURL || channelId) {
+        setError("channelURL");
+        setError("channelId");
+    } else {
         isValid = false;
-        setError("channelURL", "This field is required");
+        setError("channelURL", "This field is required or channelId");
+        setError("channelId", "This field is required or channelURL");
     }
     if (!!fromDate.getTime()) {
         if (!!toDate.getTime() && new Date(fromDate) > new Date(toDate)) {
@@ -109,7 +113,9 @@ var process = async (channelId, fromDate, toDate, apiKey) => {
 
 let onButtonClick = async () => {
     let inputs = parseInputs();
-    inputs.channelId = await getChannelIdByURL(inputs.channelURL);
+    if (!inputs.channelId){
+        inputs.channelId = await getChannelIdByURL(inputs.channelURL);
+    }
     if (validateInputs(inputs)) {
         const {channelId, fromDate, toDate, apiKey} = inputs;
         let result = await process(channelId, fromDate, toDate, apiKey)
